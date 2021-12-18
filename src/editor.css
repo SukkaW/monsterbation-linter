@@ -1,0 +1,61 @@
+@import "npm:codemirror/lib/codemirror.css";
+
+.editor-error {
+  box-shadow: 0 3px red;
+}
+
+.cm-s-bbedit {
+  border: 1px solid #ddd;
+}
+
+.CodeMirror * {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.cm-variable {
+  color: #008281;
+}
+
+.cm-s-bbedit .CodeMirror-sizer > div {
+  margin-left: 2px;
+}
+
+.cm-s-bbedit .CodeMirror-gutters {
+  box-shadow: 1px 0 2px 0 rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 1px 0 2px 0 rgba(0, 0, 0, 0.5);
+  background-color: #ffffff;
+  padding-right: 5px;
+  z-index: 3;
+  border: none;
+}
+.cm-s-bbedit div.CodeMirror-cursor {
+  border-left: 2px solid #000000;
+}
+.cm-s-bbedit .CodeMirror-activeline-background {
+  background: #00000012;
+}
+.cm-s-bbedit .CodeMirror-selected {
+  background: #ffd420;
+}
+.cm-s-bbedit .cm-comment {
+  color: #804000;
+}
+.cm-s-bbedit .cm-number {
+  color: #0000ff;
+}
+.cm-s-bbedit .cm-string {
+  color: #ff0080;
+}
+.cm-s-bbedit .cm-atom {
+  color: #0000ff;
+}
+.cm-s-bbedit .cm-property {
+  color: #0000ff;
+}
+.cm-s-bbedit .cm-keyword {
+  color: null;
+}
+.cm-s-bbedit .cm-operator {
+  color: null;
+}

@@ -1,0 +1,64 @@
+{
+  "name": "monsterbation-linter",
+  "version": "0.0.0",
+  "description": "",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "serve": "parcel serve ./src/index.html",
+    "clean": "rimraf ./dist && rimraf ./.parcel-cache",
+    "build": "parcel build ./src/index.html --no-source-maps",
+    "build-eslint": "webpack --config ./build/webpack.config.js",
+    "build:report": "parcel build ./src/index.html --reporter @parcel/reporter-bundle-analyzer"
+  },
+  "browserslist": "defaults, since 2017",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SukkaW/monsterbation-linter.git"
+  },
+  "author": "Sukka <https://skk.moe>",
+  "alias": {
+    "eslint": "./src/eslint-browserify/eslint.js"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SukkaW/monsterbation-linter/issues"
+  },
+  "homepage": "https://github.com/SukkaW/monsterbation-linter#readme",
+  "dependencies": {
+    "@picocss/pico": "^1.4.1",
+    "@types/debounce": "^1.2.1",
+    "@types/jshint": "^2.12.1",
+    "clsx": "^1.1.1",
+    "codemirror": "^5.64.0",
+    "debounce": "^1.2.1",
+    "flexboxgrid": "^6.3.1",
+    "jshint": "^2.13.1",
+    "react": "^18.0.0-beta-24dd07bd2-20211208",
+    "react-dom": "^18.0.0-beta-24dd07bd2-20211208"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^21.0.1",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^13.1.1",
+    "@types/codemirror": "^5.60.5",
+    "@types/eslint": "^8.2.1",
+    "@types/json-schema": "^7.0.9",
+    "@types/node": "^17.0.0",
+    "@types/react": "^17.0.37",
+    "@types/react-dom": "^17.0.11",
+    "@types/shelljs": "^0.8.10",
+    "@typescript-eslint/eslint-plugin": "^5.7.0",
+    "@typescript-eslint/parser": "^5.7.0",
+    "eslint": "^8.5.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "node-polyfill-webpack-plugin": "^1.1.4",
+    "parcel": "^2.0.1",
+    "rollup-plugin-polyfill-node": "^0.8.0",
+    "rollup-plugin-swc3": "^0.1.4",
+    "typescript": "^4.5.4",
+    "webpack": "^5.65.0",
+    "webpack-cli": "^4.9.1"
+  }
+}

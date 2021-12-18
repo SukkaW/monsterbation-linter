@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "lib": ["es2020", "dom"],
+    "target": "es2020",
+    "jsx": "react-jsx",
+    "module": "commonjs",
+    "declaration": false,
+    "outDir": "dist",
+    "strict": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "types": ["react/next", "react-dom/next"]
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["dist", "test"]
+}

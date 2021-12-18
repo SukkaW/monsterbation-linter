@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html data-theme="light">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Monsterbation Configuration Linter</title>
+  <meta name="format-detection" content="telephone=no">
+  <style>
+    html {
+      height: 100%;
+      background-color: #e3e0d1;
+    }
+
+    #app:empty::before {
+      display: block;
+      content: "Loading...";
+      color: #5c0d11;
+      animation: loading-fadein 1.6s infinite;
+      animation-delay: 0.4s;
+      animation-fill-mode: forwards;
+      font-size: 2rem;
+      font-weight: 300;
+      left: 0;
+      opacity: 0;
+      position: absolute;
+      right: 0;
+      text-align: center;
+      top: 200px;
+      z-index: -1;
+    }
+
+    @keyframes loading-fadein {
+      0% {
+        opacity: 0
+      }
+
+      50% {
+        opacity: 1
+      }
+
+      to {
+        opacity: 0
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+  <div id="app"></div>
+  <script src="index.tsx" type="module"></script>
+</body>
