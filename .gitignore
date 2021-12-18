@@ -8,3 +8,4 @@ public
 .parcel-cache
 parcel-bundle-reports
 temp*
+src/eslint-browserify
