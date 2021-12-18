@@ -26,11 +26,11 @@ export const Messages: React.FC<MessagesProps> = (props) => {
   }
 
   return (
-    <div id="results" className="col-xs-4 error">
+    <div id="results" className="col-xs-4">
       <p>
-        <strong>Your configuration doesn't pass the test!</strong>
+        <strong className="error">Your configuration doesn't pass the test!</strong>
       </p>
-      <p>
+      <p className="error">
         Please check the error messages below.<br />
         You can locate the cursor to the error by clicking the error message.
       </p>

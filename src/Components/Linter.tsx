@@ -1,5 +1,5 @@
 import { Linter as ESLinter } from 'eslint';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, startTransition } from 'react';
 import { ESLINT_OPTIONS, MONSTERBATION_GLOBALS } from '../lib/constants';
 import { Editor } from './Editor';
 import { Messages } from './Messages';
@@ -21,7 +21,9 @@ export const Linter = () => {
   const [fatalMessage, setFatalMessage] = useState<ESLinter.LintMessage>();
 
   const handleChanges = ({ value }: { value: string }) => {
-    setText(value);
+    startTransition(() => {
+      setText(value);
+    });
   };
 
   useEffect(() => {

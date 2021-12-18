@@ -6,7 +6,6 @@ import CodeMirror from 'codemirror';
 import 'codemirror/addon/edit/matchbrackets';
 import 'codemirror/addon/selection/active-line';
 import 'codemirror/mode/javascript/javascript';
-import { debounce } from 'debounce';
 import events from '../lib/events';
 
 interface EditorProps {
@@ -41,9 +40,9 @@ export const Editor: React.FC<EditorProps> = (props) => {
 
     editorRef.current.setSize(null, 600);
 
-    editorRef.current.on('change', debounce(() => {
+    editorRef.current.on('change', () => {
       props.onChange({ value: editorRef.current!.getValue() });
-    }, 500));
+    });
 
     events.on('showError', (line?: number, column?: number) => {
       const cursorLoc = (typeof line === 'number' && typeof column === 'number')
