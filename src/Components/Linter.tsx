@@ -62,9 +62,11 @@ export const Linter = () => {
   }, [text]);
 
   useEffect(() => {
+    /* eslint-disable no-console */
     console.log('messages', messages);
     console.log('fatalMessage', fatalMessage);
     console.log('errors', errors);
+    /* eslint-enable no-console */
   }, [messages, fatalMessage, errors]);
 
   return (

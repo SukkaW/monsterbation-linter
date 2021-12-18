@@ -1,6 +1,5 @@
 import type React from 'react';
 import type { Linter } from 'eslint';
-import clsx from 'clsx';
 import events from '../lib/events';
 import { COMMON_ERROR_MESSAGES } from '../lib/constants';
 
@@ -24,11 +23,9 @@ interface MessageProps {
 }
 
 export const Message: React.FC<MessageProps> = (props) => {
-  const isError = props.value.fatal || props.value.severity === 2;
-
   return (
     <button
-      className={clsx('alert', `${isError ? 'danger' : 'warning'}`)}
+      className="alert"
       title={props.value.message}
       onClick={
         () => events.emit('showError', props.value.line, props.value.column)
