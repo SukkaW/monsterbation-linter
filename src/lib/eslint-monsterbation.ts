@@ -182,7 +182,7 @@ export const MonsterbationESLintRules: {
                     if (element?.type === 'Literal') {
                       context.report({
                         node: element,
-                        message: '"Strongest" only accepts an array of functions as its argument. You should only use bindable functions.'
+                        message: '"Strongest" only accepts an array of functions as its argument. You should only use bindable actions here.'
                       });
                     }
                   }
@@ -211,7 +211,7 @@ export const MonsterbationESLintRules: {
             if (firstArg && firstArg.type === 'Literal') {
               context.report({
                 node: firstArg,
-                message: '"HoverAction" only accepts function as its second argument. You should only use a bindable action here.'
+                message: '"HoverAction" only accepts function as its first argument. You should only use a bindable action here.'
               });
             }
             if (secondArg) {
