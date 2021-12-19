@@ -17,7 +17,6 @@ interface EditorProps {
 }
 
 export const Editor: React.FC<EditorProps> = (props) => {
-  const { onChange } = props;
   const editorElementRef = useRef<HTMLTextAreaElement>(null);
   const editorRef = useRef<CodeMirror.EditorFromTextArea | undefined>(undefined);
   const textMarkersRef = useRef<(CodeMirror.TextMarker | undefined)[]>([]);
@@ -44,7 +43,7 @@ export const Editor: React.FC<EditorProps> = (props) => {
     editorRef.current.setSize(null, 600);
 
     editorRef.current.on('change', () => {
-      onChange({ value: editorRef.current!.getValue() });
+      props.onChange({ value: editorRef.current?.getValue() || '' });
     });
 
     events.on('showError', (line?: number, column?: number) => {
@@ -57,7 +56,10 @@ export const Editor: React.FC<EditorProps> = (props) => {
     });
 
     return () => editorRef.current?.toTextArea();
-  }, [onChange]);
+  // This only needs to be called once on mount
+  // It also prevents codemirror from losing focus
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     // This will be called when the component mounts and updates
