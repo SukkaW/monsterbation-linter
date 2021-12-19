@@ -1,11 +1,11 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, StrictMode } from 'react';
 import { Spinner } from './Spinner';
 
 const Linter = lazy(() => import('./Linter').then(mod => ({ default: mod.Linter })));
 
 export const App = () => {
   return (
-    <>
+    <StrictMode>
       <main className="container" style={{
         marginTop: '1.5rem'
       }}>
@@ -31,6 +31,6 @@ export const App = () => {
           </ul>
         </div>
       </footer>
-    </>
+    </StrictMode>
   );
 };
