@@ -62,6 +62,10 @@ button.alert:last-child {
   color: red;
 }
 
+.warning {
+  color: #ffb300
+}
+
 .success {
   color: var(--ins-color);
 }

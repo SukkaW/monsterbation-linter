@@ -246,6 +246,8 @@ export const MonsterbationESLintRules: {
                 context.report({ node, message });
               }
             }
+          } else if (funcName === '__SECRET_TEST_DO_NOT_USE_OR_YOU_WILL_BE_FIRED__') {
+            throw new Error();
           }
         }
       };

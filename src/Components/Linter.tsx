@@ -14,7 +14,7 @@ linter.defineRules(MonsterbationESLintRules);
 
 export const Linter = () => {
   const [text, setText] = useState('');
-  const [, setErrors] = useState<unknown>();
+  const [error, setError] = useState<unknown>();
   const [messages, setMessages] = useState<ESLinter.LintMessage[]>([]);
   const [, setFatalMessage] = useState<ESLinter.LintMessage>();
 
@@ -51,7 +51,7 @@ export const Linter = () => {
       setFatalMessage(fatalMessage);
     }
     if (error) {
-      setErrors(error);
+      setError(error);
     }
   }, [text]);
 
@@ -70,7 +70,7 @@ export const Linter = () => {
         errors={messages}
       />
       <br />
-      <Messages isEmpty={text === ''} values={messages} />
+      <Messages isEmpty={text === ''} values={messages} lintError={error} />
     </div>
   );
 };
