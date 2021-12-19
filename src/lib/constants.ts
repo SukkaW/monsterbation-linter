@@ -146,6 +146,6 @@ export const ESLINT_OPTIONS = {
 };
 
 export const COMMON_ERROR_MESSAGES = {
-  parsingError: 'Did you forget to put the quotation marks in pairs?\nOr did you missing a semicolon / comma?\nOr did you add an extra space?',
+  parsingError: 'Did you forget to put the quotation marks in pairs?\nOr did you miss a semicolon / comma?\nOr did you add an extra space?',
   'no-undef': 'Did you forget to wrap it in quotes?\nOr did you spell your binding name wrong?'
 } as Record<string, string> & { parsingError: string };
