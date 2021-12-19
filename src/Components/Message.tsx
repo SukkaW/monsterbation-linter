@@ -1,14 +1,14 @@
 import type React from 'react';
 import type { Linter } from 'eslint';
 import events from '../lib/events';
-import { COMMON_ERROR_MESSAGES } from '../lib/constants';
+import { COMMON_ERROR_MESSAGES, MONSTERBATION_GLOBALS_CODE_LINES } from '../lib/constants';
 
 function formatMessage({ line, column, message }: { line?: number; column?: number; message: string }) {
   // line and column are undefined when parsing cannot occur (e.g. misconfiguration)
   if (typeof line === 'number' && typeof column === 'number') {
     return (
       <>
-        <strong>[Line {line - 1} Col {column}]</strong>{' '}{message}
+        <strong>[Line {line - MONSTERBATION_GLOBALS_CODE_LINES} Col {column}]</strong>{' '}{message}
       </>
     );
   }
@@ -23,6 +23,7 @@ interface MessageProps {
 }
 
 export const Message: React.FC<MessageProps> = (props) => {
+  console.log(props.value);
   return (
     <button
       className="alert"
@@ -37,19 +38,25 @@ export const Message: React.FC<MessageProps> = (props) => {
           ? (<><hr /><p>{COMMON_ERROR_MESSAGES.parsingError}</p></>)
           : [
             ' (',
-            <a
-              key="ruleLink"
-              href={`https://eslint.org/docs/rules/${props.value.ruleId}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {props.value.ruleId}
-            </a>,
+            (
+              props.value.ruleId?.startsWith('monsterbation')
+                ? props.value.ruleId
+                : (
+                  <a
+                    key="ruleLink"
+                    href={`https://eslint.org/docs/rules/${props.value.ruleId}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {props.value.ruleId}
+                  </a>
+                )
+            ),
             ')'
           ]
       }
       {
-        props.value.ruleId && (<><hr /><p>{COMMON_ERROR_MESSAGES[props.value.ruleId]}</p></>)
+        props.value.ruleId && COMMON_ERROR_MESSAGES[props.value.ruleId] && (<><hr /><p>{COMMON_ERROR_MESSAGES[props.value.ruleId]}</p></>)
       }
     </button>
   );

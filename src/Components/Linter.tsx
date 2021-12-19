@@ -1,30 +1,22 @@
 import { Linter as ESLinter } from 'eslint';
 import { useState, useEffect, startTransition } from 'react';
-import { ESLINT_OPTIONS, MONSTERBATION_GLOBALS } from '../lib/constants';
+
+import { ESLINT_OPTIONS, MONSTERBATION_GLOBALS_CODE } from '../lib/constants';
+import { MonsterbationESLintRules } from '../lib/eslint-monsterbation';
+
 import { Editor } from './Editor';
 import { Messages } from './Messages';
 
 import '../editor.css';
 
-const MONSTERBATION_GLOBALS_CODE = [
-  '/* global ',
-  ...MONSTERBATION_GLOBALS,
-  ' */'
-].join(' ');
-
 const linter = new ESLinter();
+linter.defineRules(MonsterbationESLintRules);
 
 export const Linter = () => {
   const [text, setText] = useState('');
-  const [errors, setErrors] = useState<unknown>();
+  const [, setErrors] = useState<unknown>();
   const [messages, setMessages] = useState<ESLinter.LintMessage[]>([]);
-  const [fatalMessage, setFatalMessage] = useState<ESLinter.LintMessage>();
-
-  const handleChanges = ({ value }: { value: string }) => {
-    startTransition(() => {
-      setText(value);
-    });
-  };
+  const [, setFatalMessage] = useState<ESLinter.LintMessage>();
 
   useEffect(() => {
     const lint = () => {
@@ -63,13 +55,12 @@ export const Linter = () => {
     }
   }, [text]);
 
-  useEffect(() => {
-    /* eslint-disable no-console */
-    console.log('messages', messages);
-    console.log('fatalMessage', fatalMessage);
-    console.log('errors', errors);
-    /* eslint-enable no-console */
-  }, [messages, fatalMessage, errors]);
+  const handleChanges = ({ value }: { value: string }) => {
+    // Use React 18 startTransition for better responsiveness
+    startTransition(() => {
+      setText(value);
+    });
+  };
 
   return (
     <div className="row">

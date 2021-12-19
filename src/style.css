@@ -50,6 +50,10 @@ button.alert {
   --muted-border-color: #fbd4dc;
 }
 
+button.alert:last-child {
+  margin-bottom: 0;
+}
+
 .info {
   color: #5c0d11;
 }

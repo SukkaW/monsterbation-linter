@@ -1,4 +1,4 @@
-export const MONSTERBATION_GLOBALS = [
+const MONSTERBATION_GLOBALS = [
   // Global Variables
   'timelog',
   'combatlog',
@@ -80,6 +80,14 @@ export const MONSTERBATION_GLOBALS = [
   ].map(letter => `KEY_${letter}`)
 ];
 
+export const MONSTERBATION_GLOBALS_CODE = [
+  '/* global ',
+  ...MONSTERBATION_GLOBALS,
+  ' */'
+].join(' ');
+
+export const MONSTERBATION_GLOBALS_CODE_LINES = MONSTERBATION_GLOBALS_CODE.split('\n').length;
+
 export const ESLINT_OPTIONS = {
   parserOptions: {
     ecmaVersion: 'latest' as const,
@@ -137,7 +145,8 @@ export const ESLINT_OPTIONS = {
     'no-constructor-return': 2,
     'no-dupe-class-members': 2,
     'no-div-regex': 2,
-    'no-delete-var': 2
+    'no-delete-var': 2,
+    'monsterbation': 2
   } as const,
   env: {
     browser: true,
