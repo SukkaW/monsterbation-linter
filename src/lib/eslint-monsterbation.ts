@@ -1,7 +1,7 @@
 import type { Rule } from 'eslint';
-import type { CallExpression, Expression, SpreadElement } from 'estree';
+import type { CallExpression, SimpleCallExpression, Expression, SpreadElement } from 'estree';
 
-const getFuncName = (node: CallExpression & Rule.NodeParentExtension) => {
+const getFuncName = (node: CallExpression & Rule.NodeParentExtension | SimpleCallExpression) => {
   if (node.callee.type === 'Identifier') {
     return node.callee.name;
   }
@@ -183,6 +183,32 @@ export const MonsterbationESLintRules: {
                       context.report({
                         node: element,
                         message: '"Strongest" only accepts an array of functions as its argument. You should only use bindable actions here.'
+                      });
+                    }
+                  }
+
+                  // https://forums.e-hentai.org/index.php?s=&showtopic=151413&view=findpost&p=6050880
+                  // Strongest([TargetMonster(9), TargetMonster(8), Cast('Imperil')]);
+                  const numOfTargetMonsterInArgs = arg.elements.filter(
+                    element => element
+                      && element.type === 'CallExpression'
+                      && getFuncName(element) === 'TargetMonster'
+                  );
+                  if (numOfTargetMonsterInArgs.length > 1) {
+                    const start = numOfTargetMonsterInArgs[0]?.loc?.start ?? node.loc?.start;
+                    const end = numOfTargetMonsterInArgs[numOfTargetMonsterInArgs.length - 1]?.loc?.end ?? node.loc?.end;
+                    const message = `Fearsome powers thrust Laputa into orbit. Their dreaded empire once ruled the earth! ("Strongest" only allow one "TargetMonster", but here you have ${numOfTargetMonsterInArgs.length}, which is forbidden)`;
+
+                    if (start && end) {
+                      context.report({
+                        node: numOfTargetMonsterInArgs[0]!,
+                        loc: { start, end },
+                        message
+                      });
+                    } else {
+                      context.report({
+                        node: numOfTargetMonsterInArgs[0]!,
+                        message
                       });
                     }
                   }
