@@ -17,25 +17,25 @@ module.exports = {
     }
   },
   module: {
-    rules: [
-      // An workaround for the stupid parcel bug: https://github.com/parcel-bundler/parcel/issues/7468
-      {
-        test: /\.js$/,
-        loader: 'string-replace-loader',
-        options: {
-          multiple: [
-            {
-              search: JSON.stringify('object?'),
-              replace: 'objectOrNull'
-            },
-            {
-              search: JSON.stringify('string!'),
-              replace: 'stringNonNull'
-            }
-          ]
-        }
-      }
-    ]
+    // rules: [
+    //   // An workaround for the stupid parcel bug: https://github.com/parcel-bundler/parcel/issues/7468
+    //   {
+    //     test: /\.js$/,
+    //     loader: 'string-replace-loader',
+    //     options: {
+    //       multiple: [
+    //         {
+    //           search: JSON.stringify('object?'),
+    //           replace: 'objectOrNull'
+    //         },
+    //         {
+    //           search: JSON.stringify('string!'),
+    //           replace: 'stringNonNull'
+    //         }
+    //       ]
+    //     }
+    //   }
+    // ]
   },
   plugins: [
     new NodePolyfillPlugin()
