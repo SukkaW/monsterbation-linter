@@ -1,6 +1,6 @@
 import type { Linter } from 'eslint';
 
-import React, { useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 
 import CodeMirror from 'codemirror';
 import 'codemirror/addon/edit/matchbrackets';
@@ -58,8 +58,7 @@ export const Editor = ({ text, errors, onChange }: EditorProps) => {
 
     return () => editorRef.current?.toTextArea();
   // This only needs to be called once on mount
-  // It also prevents codemirror from losing focus
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- prevents codemirror from losing focus
   }, []);
 
   useEffect(() => {
@@ -109,8 +108,7 @@ export const Editor = ({ text, errors, onChange }: EditorProps) => {
         rows={100}
         ref={editorElementRef}
         value={text}
-      >
-      </textarea>
+      />
     </div>
   );
 };

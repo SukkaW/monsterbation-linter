@@ -1,12 +1,11 @@
-import type React from 'react';
 import type { Linter } from 'eslint';
 
 import { Message } from './Message';
 import { memo } from 'react';
 
 interface MessagesProps {
-  isEmpty: boolean;
-  values?: Linter.LintMessage[];
+  isEmpty: boolean,
+  values?: Linter.LintMessage[],
   lintError?: unknown
 }
 
@@ -29,7 +28,7 @@ const _Messages = ({
         <div className="warning">
           There is something wrong when trying to check your configuraion.
           <br />
-          Please report it <a href="https://forums.e-hentai.org/index.php?showtopic=253425" target="_blank">here</a> with your configuration and the error log below:
+          Please report it <a href="https://forums.e-hentai.org/index.php?showtopic=253425" target="_blank" rel="noreferrer noopenner">here</a> with your configuration and the error log below:
           <br />
           <pre>
             <code>
@@ -52,7 +51,7 @@ const _Messages = ({
   return (
     <div id="results" className="col-xs-4">
       <p>
-        <strong className="error">Your configuration doesn't pass the test!</strong>
+        <strong className="error">Your configuration doesn&apos;t pass the test!</strong>
       </p>
       <p className="error">
         Please check the error messages below.<br />
@@ -60,10 +59,12 @@ const _Messages = ({
       </p>
       {
         values.map(message => {
-          return <Message
-            key={`${message.line}:${message.column}:${message.ruleId}`}
-            value={message}
-          />;
+          return (
+            <Message
+              key={`${message.line}:${message.column}:${message.ruleId || ''}`}
+              value={message}
+            />
+          );
         })
       }
     </div>

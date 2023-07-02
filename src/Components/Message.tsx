@@ -1,9 +1,8 @@
-import type React from 'react';
 import type { Linter } from 'eslint';
 import events from '../lib/events';
 import { COMMON_ERROR_MESSAGES, MONSTERBATION_GLOBALS_CODE_LINES } from '../lib/constants';
 
-function formatMessage({ line, column, message }: { line?: number; column?: number; message: string }) {
+function formatMessage({ line, column, message }: { line?: number, column?: number, message: string }) {
   // line and column are undefined when parsing cannot occur (e.g. misconfiguration)
   if (typeof line === 'number' && typeof column === 'number') {
     return (
@@ -13,13 +12,11 @@ function formatMessage({ line, column, message }: { line?: number; column?: numb
     );
   }
 
-  return (
-    <>{message}</>
-  );
+  return message;
 }
 
 interface MessageProps {
-  value: Linter.LintMessage;
+  value: Linter.LintMessage
 }
 
 export const Message = ({ value }: MessageProps) => {
@@ -43,7 +40,7 @@ export const Message = ({ value }: MessageProps) => {
                 : (
                   <a
                     key="ruleLink"
-                    href={`https://eslint.org/docs/rules/${value.ruleId}`}
+                    href={`https://eslint.org/docs/rules/${value.ruleId || ''}`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >

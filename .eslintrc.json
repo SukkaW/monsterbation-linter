@@ -8,8 +8,7 @@
     },
     {
       "files": ["*.ts", "*.tsx"],
-      "plugins": ["react-hooks"],
-      "extends": ["sukka/typescript", "plugin:react-hooks/recommended"],
+      "extends": ["sukka/react", "sukka/typescript"],
       "parserOptions": {
         "project": [
           "./tsconfig.json"
