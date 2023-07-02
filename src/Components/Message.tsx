@@ -22,33 +22,32 @@ interface MessageProps {
   value: Linter.LintMessage;
 }
 
-export const Message: React.FC<MessageProps> = (props) => {
-  console.log(props.value);
+export const Message = ({ value }: MessageProps) => {
   return (
     <button
       className="alert"
-      title={props.value.message}
+      title={value.message}
       onClick={
-        () => events.emit('showError', props.value.line, props.value.column)
+        () => events.emit('showError', value.line, value.column)
       }
     >
-      {formatMessage(props.value)}
+      {formatMessage(value)}
       {
-        props.value.fatal
+        value.fatal
           ? (<><hr /><p>{COMMON_ERROR_MESSAGES.parsingError}</p></>)
           : [
             ' (',
             (
-              props.value.ruleId?.startsWith('monsterbation')
-                ? props.value.ruleId
+              value.ruleId?.startsWith('monsterbation')
+                ? value.ruleId
                 : (
                   <a
                     key="ruleLink"
-                    href={`https://eslint.org/docs/rules/${props.value.ruleId}`}
+                    href={`https://eslint.org/docs/rules/${value.ruleId}`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    {props.value.ruleId}
+                    {value.ruleId}
                   </a>
                 )
             ),
@@ -56,7 +55,7 @@ export const Message: React.FC<MessageProps> = (props) => {
           ]
       }
       {
-        props.value.ruleId && COMMON_ERROR_MESSAGES[props.value.ruleId] && (<><hr /><p>{COMMON_ERROR_MESSAGES[props.value.ruleId]}</p></>)
+        value.ruleId && COMMON_ERROR_MESSAGES[value.ruleId] && (<><hr /><p>{COMMON_ERROR_MESSAGES[value.ruleId]}</p></>)
       }
     </button>
   );

@@ -2,6 +2,7 @@ import type React from 'react';
 import type { Linter } from 'eslint';
 
 import { Message } from './Message';
+import { memo } from 'react';
 
 interface MessagesProps {
   isEmpty: boolean;
@@ -9,8 +10,12 @@ interface MessagesProps {
   lintError?: unknown
 }
 
-export const Messages: React.FC<MessagesProps> = (props) => {
-  if (props.isEmpty) {
+const _Messages = ({
+  isEmpty,
+  lintError,
+  values
+}: MessagesProps) => {
+  if (isEmpty) {
     return (
       <div id="results" className="col-xs-4">
         <div className="info"><strong>Paste your Monsterbation Keybind settings in the left. Only one keybind at a time.</strong></div>
@@ -18,7 +23,7 @@ export const Messages: React.FC<MessagesProps> = (props) => {
     );
   }
 
-  if (props.lintError) {
+  if (lintError) {
     return (
       <div id="results" className="col-xs-4">
         <div className="warning">
@@ -28,7 +33,7 @@ export const Messages: React.FC<MessagesProps> = (props) => {
           <br />
           <pre>
             <code>
-              {String(props.lintError)}
+              {String(lintError)}
             </code>
           </pre>
         </div>
@@ -36,7 +41,7 @@ export const Messages: React.FC<MessagesProps> = (props) => {
     );
   }
 
-  if (!props.values || props.values.length === 0) {
+  if (!values || values.length === 0) {
     return (
       <div id="results" className="col-xs-4">
         <div className="success"><strong>Your configuration passes the test!</strong></div>
@@ -54,7 +59,7 @@ export const Messages: React.FC<MessagesProps> = (props) => {
         You can locate the cursor to the error by clicking the error message.
       </p>
       {
-        props.values.map(message => {
+        values.map(message => {
           return <Message
             key={`${message.line}:${message.column}:${message.ruleId}`}
             value={message}
@@ -64,3 +69,5 @@ export const Messages: React.FC<MessagesProps> = (props) => {
     </div>
   );
 };
+
+export const Messages = memo(_Messages);

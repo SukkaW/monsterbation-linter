@@ -8,8 +8,7 @@
     "outDir": "dist",
     "strict": true,
     "moduleResolution": "node",
-    "esModuleInterop": true,
-    "types": ["react/next", "react-dom/next"]
+    "esModuleInterop": true
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
   "exclude": ["dist", "test"]
