@@ -1,14 +1,11 @@
-class EventEmitter {
-  private events: Record<string, (() => void)[]> = {};
+const events: Record<string, Array<() => void> | undefined> = {};
 
-  on(event: string, listener: (() => void)): void {
-    this.events[event] = this.events[event] || [];
-    this.events[event].push(listener);
-  }
+const on = (event: string, listener: ((this: void, ...args: any[]) => void)): void => {
+  (events[event] ||= []).push(listener);
+};
 
-  emit(event: string, ...args: any[]): void {
-    this.events[event]?.forEach(listener => Reflect.apply(listener, this, args));
-  }
-}
+const emit = (event: string, ...args: any[]): void => {
+  events[event]?.forEach(listener => Reflect.apply(listener, this, args));
+};
 
-export default new EventEmitter();
+export default { emit, on };

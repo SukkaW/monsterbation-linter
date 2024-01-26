@@ -1,9 +1,18 @@
 {
   "name": "monsterbation-linter",
   "version": "0.0.0",
-  "description": "",
   "private": true,
+  "description": "",
+  "homepage": "https://github.com/SukkaW/monsterbation-linter#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SukkaW/monsterbation-linter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SukkaW/monsterbation-linter/issues"
+  },
   "scripts": {
+    "lint": "eslint --format=sukka .",
     "serve": "parcel serve ./src/index.html",
     "clean": "rimraf ./dist && rimraf ./.parcel-cache",
     "build": "parcel build ./src/index.html --no-source-maps",
@@ -11,49 +20,36 @@
     "build:report": "parcel build ./src/index.html --reporter @parcel/reporter-bundle-analyzer"
   },
   "browserslist": "defaults, since 2017",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/SukkaW/monsterbation-linter.git"
-  },
   "author": "Sukka <https://skk.moe>",
-  "alias": {
-    "eslint": "./src/eslint-browserify/eslint.js"
-  },
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/SukkaW/monsterbation-linter/issues"
-  },
-  "homepage": "https://github.com/SukkaW/monsterbation-linter#readme",
   "dependencies": {
-    "@picocss/pico": "^1.5.10",
-    "codemirror": "^5.65.13",
+    "@picocss/pico": "^1.5.11",
+    "codemirror": "^5.65.16",
+    "eslint-linter-browserify": "^8.56.0",
     "flexboxgrid": "^6.3.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^18.3.0-canary-8bb6ee1d3-20240125",
+    "react-dom": "^18.3.0-canary-8bb6ee1d3-20240125"
   },
   "devDependencies": {
-    "@parcel/reporter-bundle-analyzer": "^2.9.3",
-    "@types/codemirror": "^5.60.8",
+    "@eslint-sukka/node": "^5.0.0",
+    "@eslint-sukka/react": "^5.0.0",
+    "@eslint-sukka/ts": "^5.0.0",
+    "@parcel/config-default": "^2.11.0",
+    "@parcel/reporter-bundle-analyzer": "^2.11.0",
+    "@types/codemirror": "^5.60.15",
     "@types/eslint": "^8.40.2",
-    "@types/json-schema": "^7.0.12",
-    "@types/node": "^17.0.45",
-    "@types/react": "^18.2.14",
-    "@types/react-dom": "^18.2.6",
-    "@typescript-eslint/eslint-plugin": "^5.60.1",
-    "@typescript-eslint/parser": "^5.60.1",
-    "eslint": "^8.44.0",
-    "eslint-config-sukka": "^1.8.6",
-    "eslint-import-resolver-typescript": "^3.5.5",
-    "eslint-plugin-import": "npm:eslint-plugin-i@^2.27.5-3",
-    "eslint-plugin-jsx-a11y": "^6.7.1",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-react": "^7.32.2",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "node-polyfill-webpack-plugin": "^2.0.1",
-    "parcel": "^2.9.3",
-    "parcel-reporter-static-files-copy": "^1.5.0",
-    "typescript": "^5.1.6",
-    "webpack": "^5.88.1",
-    "webpack-cli": "^5.1.4"
+    "@types/estree": "^1.0.5",
+    "@types/json-schema": "^7.0.15",
+    "@types/node": "^20.11.7",
+    "@types/react": "^18.2.48",
+    "@types/react-dom": "^18.2.18",
+    "buffer": "^5.5.0||^6.0.0",
+    "eslint": "^8.56.0",
+    "eslint-config-sukka": "^5.0.0",
+    "eslint-formatter-sukka": "^5.0.0",
+    "parcel": "^2.11.0",
+    "parcel-reporter-static-files-copy": "^1.5.3",
+    "process": "^0.11.10",
+    "typescript": "^5.3.3"
   }
 }

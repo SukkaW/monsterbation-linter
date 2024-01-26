@@ -1,22 +1,25 @@
-import { Linter as ESLinter } from 'eslint';
-import { useState, useEffect, startTransition } from 'react';
+import type { Linter } from 'eslint';
+
+import * as eslint from 'eslint-linter-browserify';
+
+import { useState, useEffect, startTransition, useCallback, memo } from 'react';
 
 import { ESLINT_OPTIONS, MONSTERBATION_GLOBALS_CODE } from '../lib/constants';
 import { MonsterbationESLintRules } from '../lib/eslint-monsterbation';
 
-import { Editor } from './Editor';
-import { Messages } from './Messages';
+import { Editor } from './editor';
+import { Messages } from './messages';
 
 import '../editor.css';
 
-const linter = new ESLinter();
+const linter = new eslint.Linter();
 linter.defineRules(MonsterbationESLintRules);
 
-export const Linter = () => {
+const LinterComponent = () => {
   const [text, setText] = useState('');
   const [error, setError] = useState<unknown>();
-  const [messages, setMessages] = useState<ESLinter.LintMessage[]>([]);
-  const [, setFatalMessage] = useState<ESLinter.LintMessage>();
+  const [messages, setMessages] = useState<Linter.LintMessage[]>([]);
+  // const [, setFatalMessage] = useState<Linter.LintMessage>();
 
   useEffect(() => {
     const lint = () => {
@@ -30,7 +33,7 @@ export const Linter = () => {
         const messages = linter.verify(`${MONSTERBATION_GLOBALS_CODE}\n${code}`, ESLINT_OPTIONS);
         let fatalMessage;
 
-        if (messages?.length > 0 && messages[0].fatal) {
+        if (messages.length > 0 && messages[0].fatal) {
           fatalMessage = messages[0];
         }
         return {
@@ -45,22 +48,22 @@ export const Linter = () => {
       }
     };
 
-    const { messages, fatalMessage, error } = lint();
+    const { messages, error } = lint();
     setMessages(messages);
-    if (fatalMessage) {
-      setFatalMessage(fatalMessage);
-    }
+    // if (fatalMessage) {
+    //   setFatalMessage(fatalMessage);
+    // }
     if (error) {
       setError(error);
     }
   }, [text]);
 
-  const handleChanges = ({ value }: { value: string }) => {
+  const handleChanges = useCallback(({ value }: { value: string }) => {
     // Use React 18 startTransition for better responsiveness
     startTransition(() => {
       setText(value);
     });
-  };
+  }, []);
 
   return (
     <div className="row">
@@ -74,3 +77,5 @@ export const Linter = () => {
     </div>
   );
 };
+
+export default memo(LinterComponent);

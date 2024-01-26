@@ -20,7 +20,7 @@ interface EditorProps {
 export const Editor = ({ text, errors, onChange }: EditorProps) => {
   const editorElementRef = useRef<HTMLTextAreaElement>(null);
   const editorRef = useRef<CodeMirror.EditorFromTextArea | undefined>(undefined);
-  const textMarkersRef = useRef<(CodeMirror.TextMarker | undefined)[]>([]);
+  const textMarkersRef = useRef<Array<CodeMirror.TextMarker | undefined>>([]);
 
   const clearTextMarkers = () => {
     if (textMarkersRef.current.length) {
@@ -57,9 +57,7 @@ export const Editor = ({ text, errors, onChange }: EditorProps) => {
     });
 
     return () => editorRef.current?.toTextArea();
-  // This only needs to be called once on mount
-  // eslint-disable-next-line react-hooks/exhaustive-deps -- prevents codemirror from losing focus
-  }, []);
+  }, [onChange]);
 
   useEffect(() => {
     // This will be called when the component mounts and updates

@@ -1,13 +1,16 @@
 import type { Linter } from 'eslint';
 import events from '../lib/events';
 import { COMMON_ERROR_MESSAGES, MONSTERBATION_GLOBALS_CODE_LINES } from '../lib/constants';
+import { memo } from 'react';
 
 function formatMessage({ line, column, message }: { line?: number, column?: number, message: string }) {
   // line and column are undefined when parsing cannot occur (e.g. misconfiguration)
   if (typeof line === 'number' && typeof column === 'number') {
     return (
       <>
-        <strong>[Line {line - MONSTERBATION_GLOBALS_CODE_LINES} Col {column}]</strong>{' '}{message}
+        <strong>[Line {line - MONSTERBATION_GLOBALS_CODE_LINES} Col {column}]</strong>
+        {' '}
+        {message}
       </>
     );
   }
@@ -19,9 +22,10 @@ interface MessageProps {
   value: Linter.LintMessage
 }
 
-export const Message = ({ value }: MessageProps) => {
+const Message = ({ value }: MessageProps) => {
   return (
     <button
+      type="button"
       className="alert"
       title={value.message}
       onClick={
@@ -31,7 +35,12 @@ export const Message = ({ value }: MessageProps) => {
       {formatMessage(value)}
       {
         value.fatal
-          ? (<><hr /><p>{COMMON_ERROR_MESSAGES.parsingError}</p></>)
+          ? (
+            <>
+              <hr />
+              <p>{COMMON_ERROR_MESSAGES.parsingError}</p>
+            </>
+          )
           : [
             ' (',
             (
@@ -57,3 +66,5 @@ export const Message = ({ value }: MessageProps) => {
     </button>
   );
 };
+
+export default memo(Message);

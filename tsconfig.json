@@ -1,14 +1,13 @@
 {
   "compilerOptions": {
-    "lib": ["es2020", "dom"],
     "target": "es2020",
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "jsx": "react-jsx",
-    "module": "commonjs",
+    "module": "ES2020",
+    "moduleResolution": "Bundler",
     "declaration": false,
-    "outDir": "dist",
-    "strict": true,
-    "moduleResolution": "node",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "strict": true
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
   "exclude": ["dist", "test"]

@@ -1,6 +1,6 @@
 import type { Linter } from 'eslint';
 
-import { Message } from './Message';
+import Message from './message';
 import { memo } from 'react';
 
 interface MessagesProps {
@@ -28,7 +28,7 @@ const _Messages = ({
         <div className="warning">
           There is something wrong when trying to check your configuraion.
           <br />
-          Please report it <a href="https://forums.e-hentai.org/index.php?showtopic=253425" target="_blank" rel="noreferrer noopenner">here</a> with your configuration and the error log below:
+          Please report it <a href="https://forums.e-hentai.org/index.php?showtopic=253425" target="_blank" rel="noreferrer noopener">here</a> with your configuration and the error log below:
           <br />
           <pre>
             <code>
