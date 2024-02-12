@@ -16,7 +16,7 @@
     "serve": "parcel serve ./src/index.html",
     "clean": "rimraf ./dist && rimraf ./.parcel-cache",
     "build": "parcel build ./src/index.html --no-source-maps",
-    "build-eslint": "webpack --config ./build/webpack.config.js",
+    "build-eslint": "echo 'build eslint no more'",
     "build:report": "parcel build ./src/index.html --reporter @parcel/reporter-bundle-analyzer"
   },
   "browserslist": "defaults, since 2017",
