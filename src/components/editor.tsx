@@ -1,13 +1,12 @@
 import type { Linter } from 'eslint';
 
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useCallback } from 'react';
 
 import CodeMirror from 'codemirror';
 import 'codemirror/addon/edit/matchbrackets';
 import 'codemirror/addon/selection/active-line';
 import 'codemirror/mode/javascript/javascript';
 import events from '../lib/events';
-import { MONSTERBATION_GLOBALS_CODE_LINES } from '../lib/constants';
 
 import '../editor.css';
 
@@ -18,7 +17,6 @@ interface EditorProps {
 }
 
 export const Editor = ({ text, errors, onChange }: EditorProps) => {
-  const editorElementRef = useRef<HTMLTextAreaElement>(null);
   const editorRef = useRef<CodeMirror.EditorFromTextArea | undefined>(undefined);
   const textMarkersRef = useRef<Array<CodeMirror.TextMarker | undefined>>([]);
 
@@ -32,31 +30,19 @@ export const Editor = ({ text, errors, onChange }: EditorProps) => {
   };
 
   useEffect(() => {
-    editorRef.current = CodeMirror.fromTextArea(editorElementRef.current!, {
-      mode: 'javascript',
-      lineNumbers: true,
-      showCursorWhenSelecting: true,
-      styleActiveLine: true,
-      matchBrackets: true,
-      theme: 'bbedit'
-    });
-
-    editorRef.current.setSize(null, 600);
-
-    editorRef.current.on('change', () => {
-      onChange({ value: editorRef.current?.getValue() || '' });
-    });
-
-    events.on('showError', (line?: number, column?: number) => {
+    const handleShowError = (line?: number, column?: number) => {
       const cursorLoc = (typeof line === 'number' && typeof column === 'number')
-        ? { line: line - 1 - MONSTERBATION_GLOBALS_CODE_LINES, ch: column - 1 }
+        ? { line: line - 1, ch: column - 1 }
         : { line: 0, ch: 0 };
 
       editorRef.current?.setCursor(cursorLoc);
       editorRef.current?.focus();
-    });
+    };
+    events.on('showError', handleShowError);
 
-    return () => editorRef.current?.toTextArea();
+    return () => {
+      events.off('showError', handleShowError);
+    };
   }, [onChange]);
 
   useEffect(() => {
@@ -66,7 +52,7 @@ export const Editor = ({ text, errors, onChange }: EditorProps) => {
     if (errors) {
       textMarkersRef.current = errors.map(error => {
         let from = {
-          line: error.line - 1 - MONSTERBATION_GLOBALS_CODE_LINES,
+          line: error.line - 1,
           ch: error.column - 1
         };
         let to = {
@@ -78,7 +64,7 @@ export const Editor = ({ text, errors, onChange }: EditorProps) => {
           // line and column are undefined when parsing cannot occur (e.g. misconfiguration)
           if (typeof error.line === 'number' && typeof error.column === 'number') {
             to = {
-              line: error.line - 1 - MONSTERBATION_GLOBALS_CODE_LINES,
+              line: error.line - 1,
               ch: error.column
             };
           } else {
@@ -104,7 +90,27 @@ export const Editor = ({ text, errors, onChange }: EditorProps) => {
         readOnly
         autoComplete="off"
         rows={100}
-        ref={editorElementRef}
+        ref={useCallback((el: HTMLTextAreaElement | null) => {
+          if (el) {
+            const editor = CodeMirror.fromTextArea(el, {
+              mode: 'javascript',
+              lineNumbers: true,
+              showCursorWhenSelecting: true,
+              styleActiveLine: true,
+              matchBrackets: true,
+              theme: 'bbedit'
+            });
+
+            editor.setSize(null, 600);
+            editor.on('change', () => {
+              onChange({ value: editor.getValue() || '' });
+            });
+
+            editorRef.current = editor;
+          } else {
+            editorRef.current?.toTextArea();
+          }
+        }, [onChange])}
         value={text}
       />
     </div>

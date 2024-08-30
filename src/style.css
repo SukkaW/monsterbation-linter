@@ -3,12 +3,13 @@
 
 :root:not([data-theme="dark"]),
 [data-theme="light"] {
-  --font-size: 16px;
-  --primiry: #5c0d11;
-  --h1-color: #5c0d11;
-  --muted-color: #bc6d71;
-  --card-background-color: #edebdf;
-  --typography-spacing-vertical: 0.5rem;
+  --pico-font-size: 16px;
+  --pico-primary: #5c0d11;
+  --pico-h1-color: #5c0d11;
+  --pico-muted-color: #bc6d71;
+  --pico-primary-underline: #5c0d11;
+  --pico-card-background-color: #edebdf;
+  --pico-typography-spacing-vertical: 1rem;
 }
 
 .spinner {
@@ -32,7 +33,7 @@
   display: block;
   width: 4rem;
   height: 4rem;
-  vertical-align: -0.125rem;
+  /* vertical-align: -0.125rem; */
   border: 0.25rem solid;
   border-color: var(--primiry);
   border-right: 0.25rem solid transparent;
@@ -40,15 +41,34 @@
   animation: spinner-border 0.75s linear infinite;
 }
 
-button.alert {
+h1 {
+  --pico-line-height: 1.5,
+}
+
+article {
+  --pico-block-spacing-vertical: 1.5rem;
+  --pico-block-spacing-horizontal: 1.5rem;
+  margin-top: calc(var(--pico-block-spacing-vertical) * 1.5);
+  margin-bottom: calc(var(--pico-block-spacing-vertical) * 1.5);
+}
+
+button.alert,
+button.alert:hover,
+button.alert:focus,
+button.alert:active {
   padding: 0.1rem 0.5rem;
   text-align: left;
   font-size: 0.9rem;
-  --color: red;
-  --border-color: #fbd4dc;
-  --background-color: #fde6e8;
-  --muted-border-color: #fbd4dc;
+  --pico-color: red;
+  --pico-border-color: #fbd4dc;
+  --pico-background-color: #fde6e8;
+  --pico-muted-border-color: #fbd4dc;
 }
+
+button.alert hr {
+  --pico-typography-spacing-vertical: 0.5rem
+}
+
 
 button.alert:last-child {
   margin-bottom: 0;
@@ -67,7 +87,7 @@ button.alert:last-child {
 }
 
 .success {
-  color: var(--ins-color);
+  color: var(--pico-ins-color);
 }
 
 #results {
@@ -76,7 +96,7 @@ button.alert:last-child {
 }
 
 #results button > p {
-  --typography-spacing-vertical: 0;
+  --pico-typography-spacing-vertical: 0;
   font-size: inherit;
 }
 
@@ -87,19 +107,19 @@ button.alert:last-child {
 }
 
 footer {
-  margin-bottom: var(--block-spacing-vertical);
+  margin-bottom: var(--pico-block-spacing-vertical);
 }
 
 footer ul,
 footer ul li {
-  color: var(--muted-color);
+  color: var(--pico-muted-color);
   margin-bottom: 0;
   padding: 0;
   list-style: none;
 }
 
 footer ul li a {
-  color: var(--primiry);
+  color: var(--pico-primary);
 }
 
 footer li {

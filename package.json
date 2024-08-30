@@ -13,7 +13,7 @@
   },
   "scripts": {
     "lint": "eslint --format=sukka .",
-    "serve": "parcel serve ./src/index.html",
+    "dev": "parcel serve ./src/index.html",
     "clean": "rimraf ./dist && rimraf ./.parcel-cache",
     "build": "parcel build ./src/index.html --no-source-maps",
     "build-eslint": "echo 'build eslint no more'",
@@ -23,33 +23,34 @@
   "author": "Sukka <https://skk.moe>",
   "license": "MIT",
   "dependencies": {
-    "@picocss/pico": "^1.5.11",
-    "codemirror": "^5.65.16",
-    "eslint-linter-browserify": "^8.56.0",
+    "@picocss/pico": "^2.0.6",
+    "codemirror": "^5.65.17",
+    "eslint-linter-browserify": "^9.9.1",
     "flexboxgrid": "^6.3.1",
-    "react": "^18.3.0-canary-8bb6ee1d3-20240125",
-    "react-dom": "^18.3.0-canary-8bb6ee1d3-20240125"
+    "globals": "^15.9.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@eslint-sukka/node": "^5.0.0",
-    "@eslint-sukka/react": "^5.0.0",
-    "@eslint-sukka/ts": "^5.0.0",
-    "@parcel/config-default": "^2.11.0",
-    "@parcel/reporter-bundle-analyzer": "^2.11.0",
+    "@eslint-sukka/node": "^6.2.1",
+    "@eslint-sukka/react": "^6.2.1",
+    "@parcel/config-default": "^2.12.0",
+    "@parcel/reporter-bundle-analyzer": "^2.12.0",
     "@types/codemirror": "^5.60.15",
-    "@types/eslint": "^8.40.2",
+    "@types/eslint": "^9.6.1",
     "@types/estree": "^1.0.5",
     "@types/json-schema": "^7.0.15",
-    "@types/node": "^20.11.7",
-    "@types/react": "^18.2.48",
-    "@types/react-dom": "^18.2.18",
+    "@types/node": "^22.5.1",
+    "@types/react": "^18.3.4",
+    "@types/react-dom": "^18.3.0",
     "buffer": "^5.5.0||^6.0.0",
-    "eslint": "^8.56.0",
-    "eslint-config-sukka": "^5.0.0",
-    "eslint-formatter-sukka": "^5.0.0",
-    "parcel": "^2.11.0",
+    "eslint": "^9.9.1",
+    "eslint-config-sukka": "^6.2.1",
+    "eslint-formatter-sukka": "^6.2.1",
+    "parcel": "^2.12.0",
     "parcel-reporter-static-files-copy": "^1.5.3",
     "process": "^0.11.10",
-    "typescript": "^5.3.3"
-  }
+    "typescript": "^5.5.4"
+  },
+  "packageManager": "pnpm@9.9.0"
 }
