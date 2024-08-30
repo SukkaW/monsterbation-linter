@@ -23,33 +23,33 @@
   "author": "Sukka <https://skk.moe>",
   "license": "MIT",
   "dependencies": {
-    "@picocss/pico": "^1.5.11",
-    "codemirror": "^5.65.16",
-    "eslint-linter-browserify": "^8.56.0",
+    "@picocss/pico": "^1.5.13",
+    "codemirror": "^5.65.17",
+    "eslint-linter-browserify": "^9.9.1",
     "flexboxgrid": "^6.3.1",
-    "react": "^18.3.0-canary-8bb6ee1d3-20240125",
-    "react-dom": "^18.3.0-canary-8bb6ee1d3-20240125"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "@eslint-sukka/node": "^6.2.1",
     "@eslint-sukka/react": "^6.2.1",
-    "@parcel/config-default": "^2.11.0",
-    "@parcel/reporter-bundle-analyzer": "^2.11.0",
+    "@parcel/config-default": "^2.12.0",
+    "@parcel/reporter-bundle-analyzer": "^2.12.0",
     "@types/codemirror": "^5.60.15",
-    "@types/eslint": "^8.40.2",
+    "@types/eslint": "^9.6.1",
     "@types/estree": "^1.0.5",
     "@types/json-schema": "^7.0.15",
     "@types/node": "^20.11.7",
-    "@types/react": "^18.2.48",
-    "@types/react-dom": "^18.2.18",
+    "@types/react": "^18.3.4",
+    "@types/react-dom": "^18.3.0",
     "buffer": "^5.5.0||^6.0.0",
     "eslint": "^9.9.1",
     "eslint-config-sukka": "^6.2.1",
     "eslint-formatter-sukka": "^6.2.1",
-    "parcel": "^2.11.0",
+    "parcel": "^2.12.0",
     "parcel-reporter-static-files-copy": "^1.5.3",
     "process": "^0.11.10",
     "typescript": "^5.5.4"
   },
-  "packageManager": "pnpm@9.9.0+sha512.60c18acd138bff695d339be6ad13f7e936eea6745660d4cc4a776d5247c540d0edee1a563695c183a66eb917ef88f2b4feb1fc25f32a7adcadc7aaf3438e99c1"
+  "packageManager": "pnpm@9.9.0"
 }
