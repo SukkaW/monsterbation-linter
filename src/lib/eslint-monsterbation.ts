@@ -107,18 +107,18 @@ export const MonsterbationESLintRules: {
                 checkArgsLiteral(context, node);
 
                 const arg = getFuncFirstArg(node);
-                if (arg && arg.type === 'Literal') {
-                  if (
-                    !(
-                      (typeof arg.value === 'number' && arg.value >= 1 && arg.value <= 15)
-                      || (typeof arg.value === 'string' && USE_ACCEPTED_ARGS.has(arg.value))
-                    )
-                  ) {
-                    context.report({
-                      message: `"${arg.value}" is not a valid argument of "Use". Accepted argument is one of 1~15, p, s1, s2, s3, s4, s5, s6, n1, n2, n3, n5, n6.`,
-                      node: arg
-                    });
-                  }
+                if (
+                  arg
+                  && arg.type === 'Literal'
+                  && !(
+                    (typeof arg.value === 'number' && arg.value >= 1 && arg.value <= 15)
+                    || (typeof arg.value === 'string' && USE_ACCEPTED_ARGS.has(arg.value))
+                  )
+                ) {
+                  context.report({
+                    message: `"${arg.value}" is not a valid argument of "Use". Accepted argument is one of 1~15, p, s1, s2, s3, s4, s5, s6, n1, n2, n3, n5, n6.`,
+                    node: arg
+                  });
                 }
 
                 break;
@@ -128,18 +128,18 @@ export const MonsterbationESLintRules: {
                 checkArgsLiteral(context, node);
 
                 const arg = getFuncFirstArg(node);
-                if (arg && arg.type === 'Literal') {
-                  if (
-                    !(
-                      typeof arg.value === 'string'
-                      && TOGGLE_ACCEPTED_ARGS.has(arg.value.toLowerCase())
-                    )
-                  ) {
-                    context.report({
-                      message: `"${arg.value}" is not a valid argument of "Toggle". Accepted argument is one of "Attack", "Focus", "Defend" or "Spirit", case insensitive.`,
-                      node: arg
-                    });
-                  }
+                if (
+                  arg
+                  && arg.type === 'Literal'
+                  && !(
+                    typeof arg.value === 'string'
+                    && TOGGLE_ACCEPTED_ARGS.has(arg.value.toLowerCase())
+                  )
+                ) {
+                  context.report({
+                    message: `"${arg.value}" is not a valid argument of "Toggle". Accepted argument is one of "Attack", "Focus", "Defend" or "Spirit", case insensitive.`,
+                    node: arg
+                  });
                 }
 
                 break;
@@ -153,17 +153,15 @@ export const MonsterbationESLintRules: {
                 checkArgsLength(context, node, 1);
                 checkArgsLiteral(context, node);
                 const arg = getFuncFirstArg(node);
-                if (arg && arg.type === 'Literal') {
-                  if (
-                    !(
-                      typeof arg.value === 'number' && arg.value >= 0 && arg.value <= 9
-                    )
-                  ) {
-                    context.report({
-                      message: `"${arg.value}" is not a valid argument of "TargetMonster". Accepted argument is one of 0~9.`,
-                      node: arg
-                    });
-                  }
+                if (arg && arg.type === 'Literal'
+                  && !(
+                    typeof arg.value === 'number' && arg.value >= 0 && arg.value <= 9
+                  )
+                ) {
+                  context.report({
+                    message: `"${arg.value}" is not a valid argument of "TargetMonster". Accepted argument is one of 0~9.`,
+                    node: arg
+                  });
                 }
 
                 break;
@@ -171,27 +169,10 @@ export const MonsterbationESLintRules: {
               case 'Strongest': {
                 const funcArgs = getFuncArgs(node);
                 const { start, end } = getFuncArgLoc(node);
-                if (funcArgs.length !== 1) {
-                  const message = `"Strongest" only accepts an array as an argument, but here you provide ${funcArgs.length} argument${funcArgs.length > 1 ? 's' : ''}. Did you forget to wrap it in a pair of brackets?`;
-
-                  if (start && end) {
-                    context.report({
-                      node,
-                      loc: { start, end },
-                      message
-                    });
-                  } else {
-                    context.report({ node, message });
-                  }
-                } else {
+                if (funcArgs.length === 1) {
                   const arg = getFuncFirstArg(node);
                   if (arg) {
-                    if (arg.type !== 'ArrayExpression') {
-                      context.report({
-                        node,
-                        message: '"Strongest" only accepts an array as an argument. Did you forget to wrap it in a pair of brackets?'
-                      });
-                    } else {
+                    if (arg.type === 'ArrayExpression') {
                       for (const element of arg.elements) {
                         if (element?.type === 'Literal') {
                           context.report({
@@ -205,8 +186,8 @@ export const MonsterbationESLintRules: {
                       // Strongest([TargetMonster(9), TargetMonster(8), Cast('Imperil')]);
                       const numOfTargetMonsterInArgs = arg.elements.filter(
                         element => element
-                          && element.type === 'CallExpression'
-                          && getFuncName(element) === 'TargetMonster'
+                        && element.type === 'CallExpression'
+                        && getFuncName(element) === 'TargetMonster'
                       );
                       if (numOfTargetMonsterInArgs.length > 1) {
                         const start = numOfTargetMonsterInArgs[0]?.loc?.start ?? node.loc?.start;
@@ -226,7 +207,24 @@ export const MonsterbationESLintRules: {
                           });
                         }
                       }
+                    } else {
+                      context.report({
+                        node,
+                        message: '"Strongest" only accepts an array as an argument. Did you forget to wrap it in a pair of brackets?'
+                      });
                     }
+                  }
+                } else {
+                  const message = `"Strongest" only accepts an array as an argument, but here you provide ${funcArgs.length} argument${funcArgs.length > 1 ? 's' : ''}. Did you forget to wrap it in a pair of brackets?`;
+
+                  if (start && end) {
+                    context.report({
+                      node,
+                      loc: { start, end },
+                      message
+                    });
+                  } else {
+                    context.report({ node, message });
                   }
                 }
 
