@@ -23,7 +23,7 @@
   "author": "Sukka <https://skk.moe>",
   "license": "MIT",
   "dependencies": {
-    "@picocss/pico": "^1.5.13",
+    "@picocss/pico": "^2.0.6",
     "codemirror": "^5.65.17",
     "eslint-linter-browserify": "^9.9.1",
     "flexboxgrid": "^6.3.1",
