@@ -2,7 +2,7 @@ import type { Linter } from 'eslint';
 
 import * as eslint from 'eslint-linter-browserify';
 
-import { useState, useEffect, startTransition, useCallback, memo } from 'react';
+import { useState, startTransition, useCallback, memo } from 'react';
 
 import { ESLINT_OPTIONS } from '../lib/constants';
 
@@ -45,23 +45,21 @@ const LinterComponent = () => {
   const [messages, setMessages] = useState<Linter.LintMessage[]>([]);
   // const [, setFatalMessage] = useState<Linter.LintMessage>();
 
-  useEffect(() => {
-    const { messages, error } = lint(text);
-    // eslint-disable-next-line @eslint-react/hooks-extra/no-direct-set-state-in-use-effect -- TODO: refactor lint to happen inside change event handler
-    setMessages(messages);
-    // if (fatalMessage) {
-    //   setFatalMessage(fatalMessage);
-    // }
-    if (error) {
-      // eslint-disable-next-line @eslint-react/hooks-extra/no-direct-set-state-in-use-effect -- TODO: refactor lint to happen inside change event handler
-      setError(error);
-    }
-  }, [text]);
-
   const handleChanges = useCallback(({ value }: { value: string }) => {
+    setText(value);
+
+    const { messages, error } = lint(value);
+    setMessages(messages);
+
     // Use React 18 startTransition for better responsiveness
     startTransition(() => {
-      setText(value);
+      setMessages(messages);
+      // if (fatalMessage) {
+      //   setFatalMessage(fatalMessage);
+      // }
+      if (error) {
+        setError(error);
+      }
     });
   }, []);
 
