@@ -1,3 +1,8 @@
+import type { Linter } from 'eslint';
+
+import { browser, greasemonkey } from 'globals';
+import { monsterbationESLintRule } from './eslint-monsterbation';
+
 const MONSTERBATION_GLOBALS = [
   // Global Variables
   'timelog',
@@ -80,19 +85,30 @@ const MONSTERBATION_GLOBALS = [
   ].map(letter => `KEY_${letter}`)
 ];
 
-export const MONSTERBATION_GLOBALS_CODE = [
-  '/* global ',
-  ...MONSTERBATION_GLOBALS,
-  ' */'
-].join(' ');
-
-export const MONSTERBATION_GLOBALS_CODE_LINES = MONSTERBATION_GLOBALS_CODE.split('\n').length;
-
-export const ESLINT_OPTIONS = {
-  parserOptions: {
+export const ESLINT_OPTIONS: Linter.FlatConfig[] = [{
+  languageOptions: {
     ecmaVersion: 'latest' as const,
     sourceType: 'script' as const,
-    ecmaFeatures: {}
+    parserOptions: {
+      ecmaVersion: 'latest' as const,
+      sourceType: 'script' as const,
+      ecmaFeatures: {}
+    },
+    globals: {
+      ...browser,
+      ...greasemonkey,
+      ...MONSTERBATION_GLOBALS.reduce<Record<string, 'readonly'>>((acc, key) => {
+        acc[key] = 'readonly';
+        return acc;
+      }, {})
+    }
+  },
+  plugins: {
+    monsterbation: {
+      rules: {
+        monsterbation: monsterbationESLintRule
+      }
+    }
   },
   rules: {
     'no-case-declarations': 2,
@@ -146,13 +162,9 @@ export const ESLINT_OPTIONS = {
     'no-dupe-class-members': 2,
     'no-div-regex': 2,
     'no-delete-var': 2,
-    monsterbation: 2
-  } as const,
-  env: {
-    browser: true,
-    greasemonkey: true
-  }
-};
+    'monsterbation/monsterbation': 2
+  } as const
+}];
 
 export const COMMON_ERROR_MESSAGES = {
   parsingError: 'Did you forget to put the quotation marks in pairs?\nOr did you miss a semicolon / comma?\nOr did you add an extra space?',

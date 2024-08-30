@@ -1,6 +1,6 @@
 import type { Linter } from 'eslint';
 import events from '../lib/events';
-import { COMMON_ERROR_MESSAGES, MONSTERBATION_GLOBALS_CODE_LINES } from '../lib/constants';
+import { COMMON_ERROR_MESSAGES } from '../lib/constants';
 import { memo } from 'react';
 
 function formatMessage({ line, column, message }: { line?: number, column?: number, message: string }) {
@@ -8,7 +8,7 @@ function formatMessage({ line, column, message }: { line?: number, column?: numb
   if (typeof line === 'number' && typeof column === 'number') {
     return (
       <>
-        <strong>[Line {line - MONSTERBATION_GLOBALS_CODE_LINES} Col {column}]</strong>
+        <strong>[Line {line} Col {column}]</strong>
         {' '}
         {message}
       </>

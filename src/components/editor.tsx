@@ -7,7 +7,6 @@ import 'codemirror/addon/edit/matchbrackets';
 import 'codemirror/addon/selection/active-line';
 import 'codemirror/mode/javascript/javascript';
 import events from '../lib/events';
-import { MONSTERBATION_GLOBALS_CODE_LINES } from '../lib/constants';
 
 import '../editor.css';
 
@@ -49,7 +48,7 @@ export const Editor = ({ text, errors, onChange }: EditorProps) => {
 
     events.on('showError', (line?: number, column?: number) => {
       const cursorLoc = (typeof line === 'number' && typeof column === 'number')
-        ? { line: line - 1 - MONSTERBATION_GLOBALS_CODE_LINES, ch: column - 1 }
+        ? { line: line - 1, ch: column - 1 }
         : { line: 0, ch: 0 };
 
       editorRef.current?.setCursor(cursorLoc);
@@ -66,7 +65,7 @@ export const Editor = ({ text, errors, onChange }: EditorProps) => {
     if (errors) {
       textMarkersRef.current = errors.map(error => {
         let from = {
-          line: error.line - 1 - MONSTERBATION_GLOBALS_CODE_LINES,
+          line: error.line - 1,
           ch: error.column - 1
         };
         let to = {
@@ -78,7 +77,7 @@ export const Editor = ({ text, errors, onChange }: EditorProps) => {
           // line and column are undefined when parsing cannot occur (e.g. misconfiguration)
           if (typeof error.line === 'number' && typeof error.column === 'number') {
             to = {
-              line: error.line - 1 - MONSTERBATION_GLOBALS_CODE_LINES,
+              line: error.line - 1,
               ch: error.column
             };
           } else {

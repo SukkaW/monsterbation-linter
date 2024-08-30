@@ -4,8 +4,7 @@ import * as eslint from 'eslint-linter-browserify';
 
 import { useState, useEffect, startTransition, useCallback, memo } from 'react';
 
-import { ESLINT_OPTIONS, MONSTERBATION_GLOBALS_CODE } from '../lib/constants';
-import { MonsterbationESLintRules } from '../lib/eslint-monsterbation';
+import { ESLINT_OPTIONS } from '../lib/constants';
 
 import { Editor } from './editor';
 import { Messages } from './messages';
@@ -13,7 +12,6 @@ import { Messages } from './messages';
 import '../editor.css';
 
 const linter = new eslint.Linter();
-linter.defineRules(MonsterbationESLintRules);
 
 const lint = (text: string) => {
   try {
@@ -23,7 +21,7 @@ const lint = (text: string) => {
       }
       return line;
     }).join('\n');
-    const messages = linter.verify(`${MONSTERBATION_GLOBALS_CODE}\n${code}`, ESLINT_OPTIONS);
+    const messages = linter.verify(code, ESLINT_OPTIONS);
     let fatalMessage;
 
     if (messages.length > 0 && messages[0].fatal) {
