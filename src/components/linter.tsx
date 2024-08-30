@@ -1,6 +1,6 @@
 import type { Linter } from 'eslint';
 
-import * as eslint from 'eslint-linter-browserify';
+import { Linter as BrowserifyLinter } from 'eslint-linter-browserify';
 
 import { useState, startTransition, useCallback, memo } from 'react';
 
@@ -11,7 +11,7 @@ import { Messages } from './messages';
 
 import '../editor.css';
 
-const linter = new eslint.Linter();
+const linter = new BrowserifyLinter();
 
 const lint = (text: string) => {
   try {
