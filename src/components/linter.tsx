@@ -9,6 +9,7 @@ import { ESLINT_OPTIONS } from '../lib/constants';
 import { Editor } from './editor';
 import { Messages } from './messages';
 
+import 'codemirror/lib/codemirror.css';
 import '../editor.css';
 
 const linter = new BrowserifyLinter();

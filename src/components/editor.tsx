@@ -8,6 +8,7 @@ import 'codemirror/addon/selection/active-line';
 import 'codemirror/mode/javascript/javascript';
 import events from '../lib/events';
 
+import 'codemirror/lib/codemirror.css';
 import '../editor.css';
 
 interface EditorProps {
