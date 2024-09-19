@@ -183,8 +183,8 @@ export const monsterbationESLintRule: Rule.RuleModule = {
                     // Strongest([TargetMonster(9), TargetMonster(8), Cast('Imperil')]);
                     const numOfTargetMonsterInArgs = arg.elements.filter(
                       element => element
-                      && element.type === 'CallExpression'
-                      && getFuncName(element) === 'TargetMonster'
+                        && element.type === 'CallExpression'
+                        && getFuncName(element) === 'TargetMonster'
                     );
                     if (numOfTargetMonsterInArgs.length > 1) {
                       const start = numOfTargetMonsterInArgs[0]?.loc?.start ?? node.loc?.start;

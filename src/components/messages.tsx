@@ -9,7 +9,7 @@ interface MessagesProps {
   lintError?: unknown
 }
 
-const _Messages = ({
+export const Messages = memo(({
   isEmpty,
   lintError,
   values
@@ -69,6 +69,4 @@ const _Messages = ({
       }
     </div>
   );
-};
-
-export const Messages = memo(_Messages);
+});

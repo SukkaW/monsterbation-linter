@@ -85,7 +85,7 @@ const MONSTERBATION_GLOBALS = [
   ].map(letter => `KEY_${letter}`)
 ];
 
-export const ESLINT_OPTIONS: Linter.FlatConfig[] = [{
+export const ESLINT_OPTIONS: Linter.Config[] = [{
   languageOptions: {
     ecmaVersion: 'latest' as const,
     sourceType: 'script' as const,
