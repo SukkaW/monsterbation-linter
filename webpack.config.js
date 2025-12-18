@@ -88,10 +88,11 @@ module.exports = /** @type {import('webpack').Configuration} */ ({
   entry: './src/index.tsx',
   output: {
     library: '_SKK',
-    filename: isDevelopment ? '[name].js' : '[contenthash].js',
-    cssFilename: isDevelopment ? '[name].css' : '[contenthash].css',
-    hotUpdateChunkFilename: '[id].[fullhash].hot-update.js',
-    hotUpdateMainFilename: '[fullhash].[runtime].hot-update.json',
+    filename: isDevelopment ? '_sukka/static/[name].js' : '_sukka/static/[contenthash].js',
+    cssFilename: isDevelopment ? '_sukka/static/[name].css' : '_sukka/static/[contenthash].css',
+    hotUpdateChunkFilename: '_sukka/static/[id].[fullhash].hot-update.js',
+    hotUpdateMainFilename: '_sukka/static/[fullhash].[runtime].hot-update.json',
+    webassemblyModuleFilename: '_sukka/static/[hash].wasm',
     path: path.resolve(__dirname, 'dist'),
     asyncChunks: true,
     crossOriginLoading: 'anonymous',
@@ -153,7 +154,7 @@ module.exports = /** @type {import('webpack').Configuration} */ ({
         ]
       },
       {
-        test: /\.[cm]?t=jsx?$/,
+        test: /\.[cm]?jsx?$/,
         exclude: /node_modules/,
         use: [
           {
