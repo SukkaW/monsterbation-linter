@@ -9,12 +9,15 @@ import { ESLINT_OPTIONS } from '../lib/constants';
 import { Editor } from './editor';
 import { Messages } from './messages';
 
+// @ts-expect-error -- css imports
 import 'codemirror/lib/codemirror.css';
+// @ts-expect-error -- css imports
 import '../editor.css';
+import { extractErrorMessage } from 'foxts/extract-error-message';
 
 const linter = new BrowserifyLinter();
 
-const lint = (text: string) => {
+function lint(text: string) {
   try {
     const code = text.split('\n').map(line => {
       if (line.endsWith('\\')) {
@@ -35,14 +38,14 @@ const lint = (text: string) => {
   } catch (error) {
     return {
       messages: [],
-      error
+      error: extractErrorMessage(error)
     };
   }
-};
+}
 
-const LinterComponent = () => {
+function LinterComponent() {
   const [text, setText] = useState('');
-  const [error, setError] = useState<unknown>();
+  const [error, setError] = useState<string>();
   const [messages, setMessages] = useState<Linter.LintMessage[]>([]);
   // const [, setFatalMessage] = useState<Linter.LintMessage>();
 
@@ -75,6 +78,6 @@ const LinterComponent = () => {
       <Messages isEmpty={text === ''} values={messages} lintError={error} />
     </div>
   );
-};
+}
 
 export default memo(LinterComponent);

@@ -1,35 +1,33 @@
 import type { Rule } from 'eslint';
 import type { CallExpression, SimpleCallExpression, Expression, SpreadElement } from 'estree';
 
-const getFuncName = (node: CallExpression & Rule.NodeParentExtension | SimpleCallExpression) => {
+function getFuncName(node: CallExpression & Rule.NodeParentExtension | SimpleCallExpression) {
   if (node.callee.type === 'Identifier') {
     return node.callee.name;
   }
   return null;
-};
+}
 
-const getFuncArgs = (node: CallExpression & Rule.NodeParentExtension) => {
+function getFuncArgs(node: CallExpression & Rule.NodeParentExtension) {
   if (node.arguments.length === 0) {
     return [];
   }
   return node.arguments;
-};
+}
 
 const getFuncFirstArg = (node: CallExpression & Rule.NodeParentExtension): Expression | SpreadElement | null => node.arguments[0] ?? null;
 
-const getFuncArgLoc = (node: CallExpression & Rule.NodeParentExtension) => {
+function getFuncArgLoc(node: CallExpression & Rule.NodeParentExtension) {
   const funcArgs = getFuncArgs(node);
   const start = funcArgs[0]?.loc?.start ?? node.loc?.start;
   const end = funcArgs[funcArgs.length - 1]?.loc?.end ?? node.loc?.end;
 
   return { start, end };
-};
+}
 
-const checkArgsLength = (
-  context: Rule.RuleContext,
+function checkArgsLength(context: Rule.RuleContext,
   node: CallExpression & Rule.NodeParentExtension,
-  expectedArgsLength: number
-) => {
+  expectedArgsLength: number) {
   const funcName = getFuncName(node);
   const funcArgs = getFuncArgs(node);
   const { start, end } = getFuncArgLoc(node);
@@ -47,12 +45,10 @@ const checkArgsLength = (
       context.report({ node, message });
     }
   }
-};
+}
 
-const checkArgsLiteral = (
-  context: Rule.RuleContext,
-  node: CallExpression & Rule.NodeParentExtension
-) => {
+function checkArgsLiteral(context: Rule.RuleContext,
+  node: CallExpression & Rule.NodeParentExtension) {
   const funcName = getFuncName(node);
   for (const arg of getFuncArgs(node)) {
     if (arg.type !== 'Literal') {
@@ -62,12 +58,10 @@ const checkArgsLiteral = (
       });
     }
   }
-};
+}
 
-const checkArgsNonLiteral = (
-  context: Rule.RuleContext,
-  node: CallExpression & Rule.NodeParentExtension
-) => {
+function checkArgsNonLiteral(context: Rule.RuleContext,
+  node: CallExpression & Rule.NodeParentExtension) {
   const funcName = getFuncName(node);
   for (const arg of getFuncArgs(node)) {
     if (arg.type === 'Literal') {
@@ -77,7 +71,7 @@ const checkArgsNonLiteral = (
       });
     }
   }
-};
+}
 
 const USE_ACCEPTED_ARGS = new Set([...'1234567890'.split(''), 'p', 's1', 's2', 's3', 's4', 's5', 's6', 'n1', 'n2', 'n3', 'n5', 'n6']);
 const TOGGLE_ACCEPTED_ARGS = new Set(['Attack', 'Focus', 'Defend', 'Spirit'].map(s => s.toLowerCase()));
@@ -105,12 +99,9 @@ export const monsterbationESLintRule: Rule.RuleModule = {
 
               const arg = getFuncFirstArg(node);
               if (
-                arg
-                && arg.type === 'Literal'
-                && !(
-                  (typeof arg.value === 'number' && arg.value >= 1 && arg.value <= 15)
-                  || (typeof arg.value === 'string' && USE_ACCEPTED_ARGS.has(arg.value))
-                )
+                arg?.type === 'Literal'
+                && (typeof arg.value !== 'number' || arg.value < 1 || arg.value > 15)
+                && (typeof arg.value !== 'string' || !USE_ACCEPTED_ARGS.has(arg.value))
               ) {
                 context.report({
                   message: `"${arg.value}" is not a valid argument of "Use". Accepted argument is one of 1~15, p, s1, s2, s3, s4, s5, s6, n1, n2, n3, n5, n6.`,
@@ -126,12 +117,9 @@ export const monsterbationESLintRule: Rule.RuleModule = {
 
               const arg = getFuncFirstArg(node);
               if (
-                arg
-                && arg.type === 'Literal'
-                && !(
-                  typeof arg.value === 'string'
-                  && TOGGLE_ACCEPTED_ARGS.has(arg.value.toLowerCase())
-                )
+                arg?.type === 'Literal'
+                && (typeof arg.value !== 'string'
+                  || !TOGGLE_ACCEPTED_ARGS.has(arg.value.toLowerCase()))
               ) {
                 context.report({
                   message: `"${arg.value}" is not a valid argument of "Toggle". Accepted argument is one of "Attack", "Focus", "Defend" or "Spirit", case insensitive.`,
@@ -150,10 +138,8 @@ export const monsterbationESLintRule: Rule.RuleModule = {
               checkArgsLength(context, node, 1);
               checkArgsLiteral(context, node);
               const arg = getFuncFirstArg(node);
-              if (arg && arg.type === 'Literal'
-                && !(
-                  typeof arg.value === 'number' && arg.value >= 0 && arg.value <= 9
-                )
+              if (arg?.type === 'Literal'
+                && (typeof arg.value !== 'number' || arg.value < 0 || arg.value > 9)
               ) {
                 context.report({
                   message: `"${arg.value}" is not a valid argument of "TargetMonster". Accepted argument is one of 0~9.`,
@@ -182,8 +168,7 @@ export const monsterbationESLintRule: Rule.RuleModule = {
                     // https://forums.e-hentai.org/index.php?s=&showtopic=151413&view=findpost&p=6050880
                     // Strongest([TargetMonster(9), TargetMonster(8), Cast('Imperil')]);
                     const numOfTargetMonsterInArgs = arg.elements.filter(
-                      element => element
-                        && element.type === 'CallExpression'
+                      element => element?.type === 'CallExpression'
                         && getFuncName(element) === 'TargetMonster'
                     );
                     if (numOfTargetMonsterInArgs.length > 1) {
@@ -230,9 +215,7 @@ export const monsterbationESLintRule: Rule.RuleModule = {
             case 'HoverAction': {
               const funcArgs = getFuncArgs(node);
               const { start, end } = getFuncArgLoc(node);
-              if (!(
-                funcArgs.length >= 1 && funcArgs.length <= 2
-              )) {
+              if (funcArgs.length < 1 || funcArgs.length > 2) {
                 const message = `"Strongest" only accepts an array as an argument, but here you provide ${funcArgs.length} argument${funcArgs.length > 1 ? 's' : ''}. Did you forget to wrap it in a pair of brackets?`;
                 if (start && end) {
                   context.report({
@@ -246,7 +229,7 @@ export const monsterbationESLintRule: Rule.RuleModule = {
               }
 
               const [firstArg, secondArg] = getFuncArgs(node);
-              if (firstArg && firstArg.type === 'Literal') {
+              if (firstArg.type === 'Literal') {
                 context.report({
                   node: firstArg,
                   message: '"HoverAction" only accepts function as its first argument. You should only use a bindable action here.'

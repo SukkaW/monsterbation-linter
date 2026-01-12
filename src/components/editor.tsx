@@ -17,7 +17,7 @@ interface EditorProps {
   onChange: ({ value }: { value: string }) => void
 }
 
-export const Editor = ({ text, errors, onChange }: EditorProps) => {
+export function Editor({ text, errors, onChange }: EditorProps) {
   const editorRef = useRef<CodeMirror.EditorFromTextArea | undefined>(undefined);
   const textMarkersRef = useRef<Array<CodeMirror.TextMarker | undefined>>([]);
 
@@ -116,4 +116,4 @@ export const Editor = ({ text, errors, onChange }: EditorProps) => {
       />
     </div>
   );
-};
+}

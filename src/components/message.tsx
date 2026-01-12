@@ -22,7 +22,7 @@ interface MessageProps {
   value: Linter.LintMessage
 }
 
-const Message = ({ value }: MessageProps) => {
+function Message({ value }: MessageProps) {
   return (
     <button
       type="button"
@@ -65,6 +65,6 @@ const Message = ({ value }: MessageProps) => {
       }
     </button>
   );
-};
+}
 
 export default memo(Message);

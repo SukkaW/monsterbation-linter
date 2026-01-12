@@ -3,14 +3,15 @@ import Spinner from './components/spinner';
 
 const Linter = lazy(() => import('./components/linter'));
 
-export const App = () => {
+export function App() {
   return (
     <StrictMode>
       <main
         className="container"
         style={{
           marginTop: '1.5rem'
-        }}>
+        }}
+      >
         <hgroup>
           <h1>Monsterbation Configuration Linter</h1>
           <h2>
@@ -37,4 +38,4 @@ export const App = () => {
       </footer>
     </StrictMode>
   );
-};
+}

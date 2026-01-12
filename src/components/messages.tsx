@@ -6,7 +6,7 @@ import { memo } from 'react';
 interface MessagesProps {
   isEmpty: boolean,
   values?: Linter.LintMessage[],
-  lintError?: unknown
+  lintError?: string
 }
 
 export const Messages = memo(({
@@ -32,7 +32,7 @@ export const Messages = memo(({
           <br />
           <pre>
             <code>
-              {String(lintError)}
+              {lintError}
             </code>
           </pre>
         </div>
@@ -58,14 +58,12 @@ export const Messages = memo(({
         You can locate the cursor to the error by clicking the error message.
       </p>
       {
-        values.map(message => {
-          return (
-            <Message
-              key={`${message.line}:${message.column}:${message.ruleId || ''}`}
-              value={message}
-            />
-          );
-        })
+        values.map(message => (
+          <Message
+            key={`${message.line}:${message.column}:${message.ruleId || ''}`}
+            value={message}
+          />
+        ))
       }
     </div>
   );
