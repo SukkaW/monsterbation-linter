@@ -1,7 +1,5 @@
 import type { Linter } from 'eslint';
 
-import { Linter as BrowserifyLinter } from 'eslint-linter-browserify';
-
 import { useState, startTransition, useCallback, memo } from 'react';
 
 import { ESLINT_OPTIONS } from '../lib/constants';
@@ -15,9 +13,9 @@ import 'codemirror/lib/codemirror.css';
 import '../editor.css';
 import { extractErrorMessage } from 'foxts/extract-error-message';
 
-const linter = new BrowserifyLinter();
+import useSWRImmutable from 'swr/immutable';
 
-function lint(text: string) {
+function lint(linter: Linter, text: string) {
   try {
     const code = text.split('\n').map(line => {
       if (line.endsWith('\\')) {
@@ -43,7 +41,40 @@ function lint(text: string) {
   }
 }
 
-function LinterComponent() {
+declare global {
+  interface Window {
+    eslint?: {
+      Linter: typeof Linter
+    }
+  }
+}
+
+function useBrowserifyLinter() {
+  return useSWRImmutable('sukka://eslint-linter-browserify', async () => {
+    if (!window.eslint) {
+      await new Promise<void>((resolve, reject) => {
+        const scriptEl = document.createElement('script');
+        scriptEl.src = 'https://cdn.jsdelivr.net/npm/eslint-linter-browserify@9.39.2/linter.min.js';
+        scriptEl.addEventListener('load', () => {
+          resolve();
+        }, { once: true });
+        scriptEl.addEventListener('error', () => {
+          reject(new Error('Failed to load eslint-linter-browserify script'));
+        }, { once: true });
+        document.body.appendChild(scriptEl);
+      });
+    }
+    if (!window.eslint) {
+      throw new Error('eslint-linter-browserify failed to load correctly');
+    }
+    const { Linter: BrowserifyLinter } = window.eslint;
+    return new BrowserifyLinter();
+  }, { suspense: true });
+}
+
+export default memo(function LinterComponent() {
+  const linter = useBrowserifyLinter().data;
+
   const [text, setText] = useState('');
   const [error, setError] = useState<string>();
   const [messages, setMessages] = useState<Linter.LintMessage[]>([]);
@@ -52,7 +83,7 @@ function LinterComponent() {
   const handleChanges = useCallback(({ value }: { value: string }) => {
     setText(value);
 
-    const { messages, error } = lint(value);
+    const { messages, error } = lint(linter, value);
     setMessages(messages);
 
     // Use React 18 startTransition for better responsiveness
@@ -65,7 +96,7 @@ function LinterComponent() {
         setError(error);
       }
     });
-  }, []);
+  }, [linter]);
 
   return (
     <div className="row">
@@ -78,6 +109,4 @@ function LinterComponent() {
       <Messages isEmpty={text === ''} values={messages} lintError={error} />
     </div>
   );
-}
-
-export default memo(LinterComponent);
+});

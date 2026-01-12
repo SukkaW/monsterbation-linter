@@ -23,14 +23,13 @@
   "author": "Sukka <https://skk.moe>",
   "license": "MIT",
   "dependencies": {
-    "@picocss/pico": "^2.1.1",
     "codemirror": "^5.65.20",
     "eslint-linter-browserify": "^9.39.2",
-    "flexboxgrid": "^6.3.1",
     "foxts": "^5.0.4",
     "globals": "^17.0.0",
     "react": "^19.2.3",
-    "react-dom": "^19.2.3"
+    "react-dom": "^19.2.3",
+    "swr": "^2.3.8"
   },
   "devDependencies": {
     "@corespeed/webpack": "0.1.0-beta.3",
