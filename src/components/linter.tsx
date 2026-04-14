@@ -1,10 +1,11 @@
 import type { Linter } from 'eslint';
 
-import { useState, startTransition, useCallback, memo } from 'react';
+import { useState, startTransition, useCallback, memo, useRef } from 'react';
 
 import { ESLINT_OPTIONS } from '../lib/constants';
 
 import { Editor } from './editor';
+import type { EditorRef } from './editor';
 import { Messages } from './messages';
 
 // @ts-expect-error -- css imports
@@ -98,15 +99,22 @@ export default memo(function LinterComponent() {
     });
   }, [linter]);
 
+  const editorRef = useRef<EditorRef>(null);
+
+  const handleShowError = useCallback((line?: number, column?: number) => {
+    editorRef.current?.setCursor(line || 0, column || 0);
+  }, []);
+
   return (
     <div className="row">
       <Editor
         text={text}
         onChange={handleChanges}
         errors={messages}
+        ref={editorRef}
       />
       <br />
-      <Messages isEmpty={text === ''} values={messages} lintError={error} />
+      <Messages isEmpty={text === ''} onShowError={handleShowError} values={messages} lintError={error} />
     </div>
   );
 });

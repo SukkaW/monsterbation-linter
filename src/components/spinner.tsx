@@ -1,6 +1,6 @@
 import { memo } from 'react';
 
-function Spinner() {
+export default memo(function Spinner() {
   return (
     <div className="spinner">
       <div className="spinner-outer">
@@ -8,6 +8,4 @@ function Spinner() {
       </div>
     </div>
   );
-}
-
-export default memo(Spinner);
+});

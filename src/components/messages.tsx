@@ -6,13 +6,15 @@ import { memo } from 'react';
 interface MessagesProps {
   isEmpty: boolean,
   values?: Linter.LintMessage[],
-  lintError?: string
+  lintError?: string,
+  onShowError: (line?: number, column?: number) => void
 }
 
 export const Messages = memo(({
   isEmpty,
   lintError,
-  values
+  values,
+  onShowError
 }: MessagesProps) => {
   if (isEmpty) {
     return (
@@ -60,6 +62,7 @@ export const Messages = memo(({
       {
         values.map(message => (
           <Message
+            onShowError={onShowError}
             key={`${message.line}:${message.column}:${message.ruleId || ''}`}
             value={message}
           />

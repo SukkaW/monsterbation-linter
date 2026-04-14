@@ -1,22 +1,26 @@
 import type { Linter } from 'eslint';
 
-import { useRef, useEffect, useCallback } from 'react';
+import { useRef, useEffect, useCallback, useImperativeHandle } from 'react';
 
 import CodeMirror from 'codemirror';
 import 'codemirror/addon/edit/matchbrackets';
 import 'codemirror/addon/selection/active-line';
 import 'codemirror/mode/javascript/javascript';
-import events from '../lib/events';
 
 import '../editor.css';
 
+export interface EditorRef {
+  setCursor: (line: number, ch: number) => void
+}
+
 interface EditorProps {
+  ref: React.Ref<EditorRef>,
   text: string,
   errors?: Linter.LintMessage[],
   onChange: ({ value }: { value: string }) => void
 }
 
-export function Editor({ text, errors, onChange }: EditorProps) {
+export function Editor({ text, errors, onChange, ref }: EditorProps) {
   const editorRef = useRef<CodeMirror.EditorFromTextArea | undefined>(undefined);
   const textMarkersRef = useRef<Array<CodeMirror.TextMarker | undefined>>([]);
 
@@ -29,21 +33,16 @@ export function Editor({ text, errors, onChange }: EditorProps) {
     }
   };
 
-  useEffect(() => {
-    const handleShowError = (line?: number, column?: number) => {
+  useImperativeHandle(ref, () => ({
+    setCursor(line: number, column: number) {
       const cursorLoc = (typeof line === 'number' && typeof column === 'number')
         ? { line: line - 1, ch: column - 1 }
         : { line: 0, ch: 0 };
 
       editorRef.current?.setCursor(cursorLoc);
       editorRef.current?.focus();
-    };
-    events.on('showError', handleShowError);
-
-    return () => {
-      events.off('showError', handleShowError);
-    };
-  }, [onChange]);
+    }
+  }));
 
   useEffect(() => {
     // This will be called when the component mounts and updates

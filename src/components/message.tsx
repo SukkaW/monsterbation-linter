@@ -1,5 +1,4 @@
 import type { Linter } from 'eslint';
-import events from '../lib/events';
 import { COMMON_ERROR_MESSAGES } from '../lib/constants';
 import { memo } from 'react';
 
@@ -19,18 +18,17 @@ function formatMessage({ line, column, message }: { line?: number, column?: numb
 }
 
 interface MessageProps {
-  value: Linter.LintMessage
+  value: Linter.LintMessage,
+  onShowError: (line?: number, column?: number) => void
 }
 
-export default memo(function Message({ value }: MessageProps) {
+export default memo(function Message({ value, onShowError }: MessageProps) {
   return (
     <button
       type="button"
       className="alert"
       title={value.message}
-      onClick={
-        () => events.emit('showError', value.line, value.column)
-      }
+      onClick={() => onShowError?.(value.line, value.column)}
     >
       {formatMessage(value)}
       {
