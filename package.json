@@ -24,7 +24,7 @@
   "license": "MIT",
   "dependencies": {
     "codemirror": "^5.65.21",
-    "eslint-linter-browserify": "^9.39.2",
+    "eslint-linter-browserify": "^10.2.0",
     "foxts": "^5.4.0",
     "globals": "^17.5.0",
     "react": "^19.2.5",

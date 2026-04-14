@@ -55,7 +55,7 @@ function useBrowserifyLinter() {
     if (!window.eslint) {
       await new Promise<void>((resolve, reject) => {
         const scriptEl = document.createElement('script');
-        scriptEl.src = 'https://cdn.jsdelivr.net/npm/eslint-linter-browserify@9.39.2/linter.min.js';
+        scriptEl.src = 'https://cdn.jsdelivr.net/npm/eslint-linter-browserify@10.2.0/linter.min.js';
         scriptEl.addEventListener('load', () => {
           resolve();
         }, { once: true });
@@ -85,8 +85,6 @@ export default memo(function LinterComponent() {
     setText(value);
 
     const { messages, error } = lint(linter, value);
-    setMessages(messages);
-
     // Use React 18 startTransition for better responsiveness
     startTransition(() => {
       setMessages(messages);

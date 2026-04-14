@@ -12,8 +12,8 @@ importers:
         specifier: ^5.65.21
         version: 5.65.21
       eslint-linter-browserify:
-        specifier: ^9.39.2
-        version: 9.39.2
+        specifier: ^10.2.0
+        version: 10.2.0
       foxts:
         specifier: ^5.4.0
         version: 5.4.0
@@ -1617,8 +1617,8 @@ packages:
       '@eslint/json':
         optional: true
 
-  eslint-linter-browserify@9.39.2:
-    resolution: {integrity: sha512-X4oD9ymZLMaNcSRZkNyDEcwObLPTg9QsQM/YHnfWJbnqUJpmmgicXtgi9UGgk+ntC9Aydnp3RW7+uWrkoUbWbg==}
+  eslint-linter-browserify@10.2.0:
+    resolution: {integrity: sha512-3EI7WAce/YTRTyRmqYUKX7VRROyIoKacg3625Ler+079JvCU5YGQwVJLa/ifvBxr95bxv7gTsy4zw3is+hHpBg==}
 
   eslint-plugin-es-x@7.8.0:
     resolution: {integrity: sha512-7Ds8+wAAoV3T+LAKeu39Y5BzXCrGKrcISfgKEqTS4BDN8SFEDQd0S43jiQ8vIa3wUKD07qitZdfzlenSi8/0qQ==}
@@ -4849,7 +4849,7 @@ snapshots:
       esquery: 1.7.0
       jsonc-eslint-parser: 3.1.0
 
-  eslint-linter-browserify@9.39.2: {}
+  eslint-linter-browserify@10.2.0: {}
 
   eslint-plugin-es-x@7.8.0(eslint@10.2.0):
     dependencies:
