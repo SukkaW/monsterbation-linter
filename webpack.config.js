@@ -2,7 +2,7 @@
 
 const path = require('node:path');
 
-module.exports = require('@corespeed/webpack').createWebpack({
+module.exports = require('tailpack').reactSpa({
   cwd: __filename,
   dotenv: false,
   output: {
@@ -25,5 +25,11 @@ module.exports = require('@corespeed/webpack').createWebpack({
   htmlTemplatePath: './src/index.html',
   sourcemap: {
     production: false
+  }
+}, {
+  resolve: {
+    tsconfig: {
+      configFile: path.resolve(__dirname, 'tsconfig.json')
+    }
   }
 });

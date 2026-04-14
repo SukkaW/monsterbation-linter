@@ -22,7 +22,7 @@ interface MessageProps {
   value: Linter.LintMessage
 }
 
-function Message({ value }: MessageProps) {
+export default memo(function Message({ value }: MessageProps) {
   return (
     <button
       type="button"
@@ -65,6 +65,4 @@ function Message({ value }: MessageProps) {
       }
     </button>
   );
-}
-
-export default memo(Message);
+});
