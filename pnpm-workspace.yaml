@@ -1,0 +1,6 @@
+allowBuilds:
+  '@sentry/cli': false
+  '@swc/core': true
+  core-js: false
+  core-js-pure: false
+  unrs-resolver: true
