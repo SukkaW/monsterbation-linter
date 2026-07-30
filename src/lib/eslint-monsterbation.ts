@@ -50,7 +50,9 @@ function checkArgsLength(context: Rule.RuleContext,
 function checkArgsLiteral(context: Rule.RuleContext,
   node: CallExpression & Rule.NodeParentExtension) {
   const funcName = getFuncName(node);
-  for (const arg of getFuncArgs(node)) {
+  const funcArgs = getFuncArgs(node);
+  for (let i = 0, len = funcArgs.length; i < len; i++) {
+    const arg = funcArgs[i];
     if (arg.type !== 'Literal') {
       context.report({
         node: arg,
@@ -63,7 +65,9 @@ function checkArgsLiteral(context: Rule.RuleContext,
 function checkArgsNonLiteral(context: Rule.RuleContext,
   node: CallExpression & Rule.NodeParentExtension) {
   const funcName = getFuncName(node);
-  for (const arg of getFuncArgs(node)) {
+  const funcArgs = getFuncArgs(node);
+  for (let i = 0, len = funcArgs.length; i < len; i++) {
+    const arg = funcArgs[i];
     if (arg.type === 'Literal') {
       context.report({
         node: arg,
@@ -156,7 +160,8 @@ export const monsterbationESLintRule: Rule.RuleModule = {
                 const arg = getFuncFirstArg(node);
                 if (arg) {
                   if (arg.type === 'ArrayExpression') {
-                    for (const element of arg.elements) {
+                    for (let i = 0, len = arg.elements.length; i < len; i++) {
+                      const element = arg.elements[i];
                       if (element?.type === 'Literal') {
                         context.report({
                           node: element,
