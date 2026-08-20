@@ -20,7 +20,7 @@ const getFuncFirstArg = (node: CallExpression & Rule.NodeParentExtension): Expre
 function getFuncArgLoc(node: CallExpression & Rule.NodeParentExtension) {
   const funcArgs = getFuncArgs(node);
   const start = funcArgs[0]?.loc?.start ?? node.loc?.start;
-  const end = funcArgs[funcArgs.length - 1]?.loc?.end ?? node.loc?.end;
+  const end = funcArgs.at(-1)?.loc?.end ?? node.loc?.end;
 
   return { start, end };
 }
@@ -178,7 +178,7 @@ export const monsterbationESLintRule: Rule.RuleModule = {
                     );
                     if (numOfTargetMonsterInArgs.length > 1) {
                       const start = numOfTargetMonsterInArgs[0]?.loc?.start ?? node.loc?.start;
-                      const end = numOfTargetMonsterInArgs[numOfTargetMonsterInArgs.length - 1]?.loc?.end ?? node.loc?.end;
+                      const end = numOfTargetMonsterInArgs.at(-1)?.loc?.end ?? node.loc?.end;
                       const message = `Fearsome powers thrust Laputa into orbit. Their dreaded empire once ruled the earth! ("Strongest" only allow one "TargetMonster", but here you have ${numOfTargetMonsterInArgs.length}, which is forbidden)`;
 
                       if (start && end) {
